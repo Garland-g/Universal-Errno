@@ -1,0 +1,20 @@
+{
+  "auth" : "cpan:GARLANDG",
+  "authors" : [
+    "Travis Gibson"
+  ],
+  "build-depends" : [ ],
+  "depends" : [ ],
+  "description" : "blah blah blah",
+  "license" : "Artistic-2.0",
+  "name" : "errno",
+  "perl" : "6.c",
+  "provides" : {
+    "errno" : "lib/errno.pm6"
+  },
+  "resources" : [ ],
+  "source-url" : "",
+  "tags" : [ ],
+  "test-depends" : [ ],
+  "version" : "0.0.1"
+}
