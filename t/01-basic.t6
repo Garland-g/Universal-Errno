@@ -1,0 +1,12 @@
+use v6.c;
+use Test;
+use Universal::errno;
+
+plan 4;
+
+ok MY::<&errno>:exists,         <errno was imported>;
+nok errno::<&errno>:exists,     <errno is NOT externally accessible>;
+ok MY::<&set_errno>:exists,     <set_errno was imported>;
+nok errno::<&set_errno>:exists, <set_errno is NOT externally accessible>;
+
+done-testing;
