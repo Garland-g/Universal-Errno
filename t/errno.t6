@@ -9,5 +9,11 @@ is +set_errno(2), 2, <Correct value after settings>;
 is errno.^name, 'errno', <errno is still the correct class>;
 
 is +errno, 2, <Got the Int>;
-is errno.Str, 'No such file or directory', <Got the Str>;
-is errno.gist, 'No such file or directory (errno = 2)', <Got the gist>;
+if $*DISTRO.is-win() {
+  is errno.Str, 'The system cannot find the file specified.', <Got the Str>;
+  is errno.gist, 'The system cannot find the file specified. (errno = 2)', <Got the gist>;
+}
+else {
+  is errno.Str, 'No such file or directory', <Got the Str>;
+  is errno.gist, 'No such file or directory (errno = 2)', <Got the gist>;
+}
