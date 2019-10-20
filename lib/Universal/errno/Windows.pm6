@@ -65,7 +65,7 @@ my class errno {
   method Numeric(--> Int:D) { self!index }
 }
 
-module Windows::errno:ver<0.0.1>:auth<cpan:GARLANDG> {
+module Universal::errno::Windows {
   my $proxy := Proxy.new(
     FETCH => -> $ { UNIT::errno },
     STORE => -> $, $value { set_errno($value) }
@@ -83,25 +83,11 @@ module Windows::errno:ver<0.0.1>:auth<cpan:GARLANDG> {
 
 =head1 NAME
 
-Windows::errno - Provide transparent Windows access to errno
-
-=head1 SYNOPSIS
-
-=begin code :lang<perl6>
-
-use Windows::errno;
-
-  set_errno(2);
-
-  say errno;
-  say "failed: {errno}";
-  say +errno;             # 2
-
-=end code
+Universal::errno::Windows - Provide transparent Windows access to errno
 
 =head1 DESCRIPTION
 
-Windows::errno provides the same interface as C<Unix::errno> to
+Universal::errno::Windows provides the same interface as C<Unix::errno> to
 Windows and its GetLastError and SetLastError functions. Unlike
 Windows, getting the error message will not reset the value of
 errno. That has to be done manually.
@@ -109,7 +95,7 @@ errno. That has to be done manually.
 Since this uses C<SetLastError>, the caveat about setting errno
 in C<Unix::errno> should not apply, as this is a function call,
 not setting an extern variable. This should not be relied upon
-unless Windows::errno is loaded directly.
+unless Universal::errno::Windows is loaded directly.
 
 =head1 AUTHOR
 
