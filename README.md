@@ -6,7 +6,7 @@ Universal::errno - Wrapper for errno modules for Unix and Windows
 SYNOPSIS
 ========
 
-```perl6
+```raku
 use Universal::errno;
 
   set_errno(2);
@@ -19,9 +19,7 @@ use Universal::errno;
 DESCRIPTION
 ===========
 
-Universal::errno loads the correct module based on your operating system and exports the same `errno` and `set_errno` interface.
-
-When installing this module, it will install `Windows::errno` on Windows, and `Unix::errno` on everything else.
+Universal::errno is a modification and extension of lizmat's `Unix::errno`, and exports the same `errno` and `set_errno` interface. It works on Windows, Freebsd, Openbsd, Netbsd, Dragonflybsd, and Macos.
 
 AUTHOR
 ======
@@ -31,7 +29,11 @@ Travis Gibson <TGib.Travis@protonmail.com>
 CREDIT
 ------
 
-Uses lizmat's `Unix::errno` for Unix-like OSes, and uses `Windows::errno` (based on lizmat's `Unix::errno`) for Windows OSes.
+Uses a heavily-modified `Unix::errno` module for Unix-like OSes, and uses `Windows::errno` (also based on lizmat's `Unix::errno`) for Windows OSes.
+
+Universal::errno::Unix contains all of the modified code, and this README also borrows the SYNOPSIS example above. The original README and COPYRIGHT information for lizmat's `Unix::errno` has been preserved in `Universal::errno::Unix`.
+
+lizmat's `Unix::errno` can be found at [https://github.com/lizmat/Unix-errno](https://github.com/lizmat/Unix-errno)
 
 COPYRIGHT AND LICENSE
 =====================

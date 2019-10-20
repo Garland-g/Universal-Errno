@@ -1,7 +1,8 @@
+use Constants::Errno;
 
 my Str $lib = $*DISTRO.is-win()
-  ?? "Windows::errno"
-  !! "Unix::errno";
+  ?? "Universal::errno::Windows"
+  !! "Universal::errno::Unix";
 
 require ::($lib);
 
@@ -11,7 +12,6 @@ my &real-set_errno := ::("{$lib}::EXPORT::DEFAULT::{'&set_errno'}");
 module Universal::errno:ver<0.0.1>:auth<cpan:GARLANDG> {
   my sub errno() is export is raw { real-errno() }
   my sub set_errno(Int() $value) is export is raw { real-set_errno($value) }
-
 }
 
 =begin pod
@@ -36,11 +36,9 @@ use Universal::errno;
 
 =head1 DESCRIPTION
 
-Universal::errno loads the correct module based on your operating system and
-exports the same C<errno> and C<set_errno> interface.
-
-When installing this module, it will install C<Windows::errno> on Windows,
-and C<Unix::errno> on everything else.
+Universal::errno is a modification and extension of lizmat's C<Unix::errno>,
+and exports the same C<errno> and C<set_errno> interface. It works on Windows,
+Freebsd, Openbsd, Netbsd, Dragonflybsd, and Macos.
 
 =head1 AUTHOR
 
@@ -48,8 +46,15 @@ Travis Gibson <TGib.Travis@protonmail.com>
 
 =head2 CREDIT
 
-Uses lizmat's C<Unix::errno> for Unix-like OSes, and uses C<Windows::errno>
-(based on lizmat's C<Unix::errno>) for Windows OSes.
+Uses a heavily-modified C<Unix::errno> module for Unix-like OSes, and uses
+C<Windows::errno> (also based on lizmat's C<Unix::errno>) for Windows OSes.
+
+Universal::errno::Unix contains all of the modified code, and this README also
+borrows the SYNOPSIS example above. The original README and COPYRIGHT
+information for lizmat's C<Unix::errno> has been preserved in
+C<Universal::errno::Unix>.
+
+lizmat's C<Unix::errno> can be found at L<https://github.com/lizmat/Unix-errno>
 
 =head1 COPYRIGHT AND LICENSE
 

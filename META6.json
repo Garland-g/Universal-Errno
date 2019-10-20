@@ -7,25 +7,18 @@
   "depends" : {
     "runtime" : {
       "requires" : [
-        {
-          "name" : {
-            "by-distro.name" : {
-              "windows" : "Windows::errno",
-              "win32" : "Windows::errno",
-              "" : "Unix::errno",
-              "mswin32" : "Windows::errno"
-            }
-          }
-        }
+        "Constants::Errno"
       ]
     }
   },
-  "description" : "Wrapper for errno modules for Unix and Windows",
+  "description" : "errno for Linux, BSD, macos, and Windows",
   "license" : "Artistic-2.0",
   "name" : "Universal::errno",
-  "perl" : "6.d",
+  "perl" : "6.c",
   "provides" : {
-    "Universal::errno" : "lib/Universal/errno.pm6"
+    "Universal::errno" : "lib/Universal/errno.pm6",
+    "Universal::errno::Unix" : "lib/Universal/errno/Unix.pm6",
+    "Universal::errno::Windows" : "lib/Universal/errno/Windows.pm6"
   },
   "resources" : [ ],
   "source-url" : "",
