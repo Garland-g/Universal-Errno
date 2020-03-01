@@ -7,6 +7,15 @@
   "depends" : {
     "runtime" : {
       "requires" : [
+        {
+          "name" : {
+            "by-distro.name" : {
+              "windows" : "NativeHelpers::Blob",
+              "win32" : "NativeHelpers::Blob",
+              "mswin32" : "NativeHelpers::Blob"
+            }
+          }
+        },
         "Constants::Errno"
       ]
     }

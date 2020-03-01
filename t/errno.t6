@@ -3,18 +3,15 @@ use Test;
 use Constants::Errno;
 use Universal::errno;
 
-plan 6;
+plan 7;
+
+my Int $err = 2;
 
 is errno.^name, 'errno', <errno is the correct class>;
-is +set_errno(2), 2, <Correct value after settings>;
+is +set_errno($err), $err, <Correct value after settings>;
 is errno.^name, 'errno', <errno is still the correct class>;
 
-is +errno, 2, <Got the Int>;
-if $*DISTRO.is-win() {
-  is errno.Str, 'The system cannot find the file specified.', <Got the Str>;
-  is errno.gist, 'The system cannot find the file specified. (errno = 2)', <Got the gist>;
-}
-else {
-  is errno.Str, 'No such file or directory', <Got the Str>;
-  is errno.gist, 'No such file or directory (errno = 2)', <Got the gist>;
-}
+is +errno, $err, <Got the Int>;
+isa-ok errno.Str, Str, <Got the Str>;
+is errno.gist, "{errno.Str} (errno = 2)", <Got the gist>;
+is strerror($err), errno.Str, <Created the Str>;

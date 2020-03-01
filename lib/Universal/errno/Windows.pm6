@@ -45,7 +45,7 @@ my class errno {
       0,
       Str
     );
-    my buf16 $b =  blob-from-pointer($lptstr, :elems($size), :type(buf16));
+    my buf16 $b = blob-from-pointer($lptstr, :elems($size), :type(buf16));
     my Str $out = $b.decode('utf16').split("\0")[0].chomp;
     LocalFree(nativecast(Pointer[void], $lptstr));
     SetLastError($error);
@@ -75,6 +75,27 @@ module Universal::errno::Windows {
   my sub set_errno(Int() $value) is export is raw {
     SetLastError($value);
     $proxy
+  }
+
+  my sub strerror(Int() $value --> Str) is export {
+    my Pointer[uint16] $lptstr .= new;
+    my $error = $value;
+    my $size = FormatMessage(
+      FORMAT_MESSAGE::FROM_SYSTEM +|
+      FORMAT_MESSAGE::ALLOCATE_BUFFER +|
+      FORMAT_MESSAGE::IGNORE_INSERTS,
+      Str,
+      $value,
+      0,
+      $lptstr,
+      0,
+      Str
+    );
+    my buf16 $b = blob-from-pointer($lptstr, :elems($size), :type(buf16));
+    my Str $out = $b.decode('utf16').split("\0")[0].chomp;
+    LocalFree(nativecast(Pointer[void], $lptstr));
+    SetLastError($error);
+    $out;
   }
 }
 

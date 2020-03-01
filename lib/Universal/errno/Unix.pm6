@@ -59,6 +59,15 @@ module Universal::errno::Unix:ver<0.0.2>:auth<cpan:ELIZABETH> {
         $last_set = $value;
         $proxy
     }
+
+    # sub strerror added by Travis Gibson
+    my sub strerror(Int() $value --> Str) is export {
+      my $locale = newlocale(0, "C", 0);
+      die "While handling error of type {E($value)}, another error occurred:\n {errno().symbol}" unless $locale ~~ locale_t;
+      my Str $error = "" ~ strerror_l($value, $locale);
+      freelocale($locale);
+      $error
+    }
 }
 
 =begin pod

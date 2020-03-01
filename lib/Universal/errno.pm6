@@ -9,9 +9,13 @@ require ::($lib);
 my &real-errno := ::("{$lib}::EXPORT::DEFAULT::{'&errno'}");
 my &real-set_errno := ::("{$lib}::EXPORT::DEFAULT::{'&set_errno'}");
 
+#This uses a thread-safe strerror under the hood
+my &real-strerror := ::("{$lib}::EXPORT::DEFAULT::{'&strerror'}");
+
 module Universal::errno:ver<0.0.1>:auth<cpan:GARLANDG> {
   my sub errno() is export is raw { real-errno() }
   my sub set_errno(Int() $value) is export is raw { real-set_errno($value) }
+  my sub strerror(Int() $value --> Str) is export { real-strerror($value) }
 }
 
 =begin pod
@@ -37,8 +41,8 @@ use Universal::errno;
 =head1 DESCRIPTION
 
 Universal::errno is a modification and extension of lizmat's C<Unix::errno>,
-and exports the same C<errno> and C<set_errno> interface. It works on Windows,
-Freebsd, Openbsd, Netbsd, Dragonflybsd, and Macos.
+and exports the same C<errno> and C<set_errno> interface. It works on Linux,
+Windows, Freebsd, Openbsd, Netbsd, Dragonflybsd, and Macos.
 
 =head1 AUTHOR
 
