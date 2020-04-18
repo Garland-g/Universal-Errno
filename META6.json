@@ -4,22 +4,9 @@
     "Travis Gibson"
   ],
   "build-depends" : [ ],
-  "depends" : {
-    "runtime" : {
-      "requires" : [
-        {
-          "name" : {
-            "by-distro.name" : {
-              "windows" : "NativeHelpers::Blob",
-              "win32" : "NativeHelpers::Blob",
-              "mswin32" : "NativeHelpers::Blob"
-            }
-          }
-        },
-        "Constants::Errno"
-      ]
-    }
-  },
+  "depends" : [
+    "NativeHelpers::Blob",
+  ],
   "description" : "errno for Linux, BSD, macos, and Windows",
   "license" : "Artistic-2.0",
   "name" : "Universal::errno",

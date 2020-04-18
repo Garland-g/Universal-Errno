@@ -1,4 +1,4 @@
-use Constants::Errno;
+use Universal::errno::Constants;
 
 my Str $lib = $*DISTRO.is-win()
   ?? "Universal::errno::Windows"
@@ -40,9 +40,15 @@ use Universal::errno;
 
 =head1 DESCRIPTION
 
-Universal::errno is a modification and extension of lizmat's C<Unix::errno>,
+Universal::errno is an extension of and wrapper around lizmat's C<Unix::errno>,
 and exports the same C<errno> and C<set_errno> interface. It works on Linux,
 Windows, Freebsd, Openbsd, Netbsd, Dragonflybsd, and Macos.
+
+One added feature is the C<strerror> method, which gets the string for the
+error in a thread-safe way using POSIX C<strerror_l>. This allows getting the
+error string that corresponds to the user's set locale. On Windows, this is done
+using C<GetLastError()> and C<FormatMessageW>. Windows also has a C<SetLastError>
+function which is used instead of masking the value.
 
 =head1 AUTHOR
 

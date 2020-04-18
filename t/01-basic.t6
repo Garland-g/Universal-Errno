@@ -2,11 +2,17 @@ use v6.c;
 use Test;
 use Universal::errno;
 
-plan 4;
+plan 7;
 
 ok MY::<&errno>:exists,         <errno was imported>;
 nok errno::<&errno>:exists,     <errno is NOT externally accessible>;
 ok MY::<&set_errno>:exists,     <set_errno was imported>;
 nok errno::<&set_errno>:exists, <set_errno is NOT externally accessible>;
+ok MY::<&strerror>:exists,      <strerror was imported>;
+nok errno::<&strerror>:exists,  <strerror is NOT externally accessible>;
+
+use Universal::errno::Constants;
+
+ok MY::ENOENT,                  <errno codes were exported>;
 
 done-testing;
