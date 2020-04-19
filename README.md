@@ -19,7 +19,9 @@ use Universal::errno;
 DESCRIPTION
 ===========
 
-Universal::errno is a modification and extension of lizmat's `Unix::errno`, and exports the same `errno` and `set_errno` interface. It works on Windows, Freebsd, Openbsd, Netbsd, Dragonflybsd, and Macos.
+Universal::errno is an extension of and wrapper around lizmat's `Unix::errno`, and exports the same `errno` and `set_errno` interface. It works on Linux, Windows, Freebsd, Openbsd, Netbsd, Dragonflybsd, and Macos.
+
+One added feature is the `strerror` method, which gets the string for the error in a thread-safe way using POSIX `strerror_l`. This allows getting the error string that corresponds to the user's set locale. On Windows, this is done using `GetLastError()` and `FormatMessageW`. Windows also has a `SetLastError` function which is used instead of masking the value.
 
 AUTHOR
 ======

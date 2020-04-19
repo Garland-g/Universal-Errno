@@ -4,9 +4,7 @@
     "Travis Gibson"
   ],
   "build-depends" : [ ],
-  "depends" : [
-    "NativeHelpers::Blob",
-  ],
+  "depends" : [ ],
   "description" : "errno for Linux, BSD, macos, and Windows",
   "license" : "Artistic-2.0",
   "name" : "Universal::errno",
@@ -14,7 +12,8 @@
   "provides" : {
     "Universal::errno" : "lib/Universal/errno.pm6",
     "Universal::errno::Unix" : "lib/Universal/errno/Unix.pm6",
-    "Universal::errno::Windows" : "lib/Universal/errno/Windows.pm6"
+    "Universal::errno::Windows" : "lib/Universal/errno/Windows.pm6",
+    "Universal::errno::Constants" : "lib/Universal/errno/Constants.pm6"
   },
   "resources" : [ ],
   "source-url" : "",
