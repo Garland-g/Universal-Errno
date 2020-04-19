@@ -1,6 +1,5 @@
 use v6.c;
 use Test;
-use Constants::Errno;
 use Universal::errno;
 
 plan 7;

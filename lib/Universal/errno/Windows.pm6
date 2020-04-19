@@ -2,7 +2,6 @@
 die "Not on Windows" unless $*DISTRO.is-win();
 
 use NativeCall;
-use NativeHelpers::Blob;
 
 enum FORMAT_MESSAGE (
   ALLOCATE_BUFFER => 0x100,
@@ -10,9 +9,13 @@ enum FORMAT_MESSAGE (
   FROM_SYSTEM => 0x1000,
 );
 
-sub GetLastError() returns int32 is native("kernel32") { * }
+sub memcpy(Pointer $dest, Pointer $src, size_t $size) returns Pointer is native('msvcrt') { * }
 
-sub SetLastError(int32 $ierror) is native("kernel32") { * }
+sub GetLastError() returns uint32 is native("kernel32") { * }
+
+sub SetLastError(uint32 $ierror) is native("kernel32") { * }
+
+sub RestoreLastError(uint32 $ierror) is native("kernel32") { * }
 
 sub LocalFree(Pointer[void]) returns Pointer[void] is native("kernel32") { * }
 
@@ -45,17 +48,19 @@ my class errno {
       0,
       Str
     );
-    my buf16 $b = blob-from-pointer($lptstr, :elems($size), :type(buf16));
+    my buf16 $b .= allocate($size);
+    memcpy(nativecast(Pointer, $b), $lptstr, $size);
     my Str $out = $b.decode('utf16').split("\0")[0].chomp;
     LocalFree(nativecast(Pointer[void], $lptstr));
-    SetLastError($error);
+    RestoreLastError($error);
     $out;
   }
 
   method gist(--> Str:D) {
     if self!index -> $index {
-      SetLastError($index);
       my Str $out = self.Str ~ " (errno = $index)";
+      RestoreLastError($index);
+      $out
     }
     else {
       ""
@@ -77,24 +82,25 @@ module Universal::errno::Windows {
     $proxy
   }
 
-  my sub strerror(Int() $value --> Str) is export {
+  my sub strerror($value? --> Str) is export {
     my Pointer[uint16] $lptstr .= new;
-    my $error = $value;
+    my $error = $value // errno.Numeric // 0;
     my $size = FormatMessage(
       FORMAT_MESSAGE::FROM_SYSTEM +|
       FORMAT_MESSAGE::ALLOCATE_BUFFER +|
       FORMAT_MESSAGE::IGNORE_INSERTS,
       Str,
-      $value,
+      $error,
       0,
       $lptstr,
       0,
       Str
     );
-    my buf16 $b = blob-from-pointer($lptstr, :elems($size), :type(buf16));
+    my buf16 $b .= allocate($size);
+    memcpy(nativecast(Pointer, $b), $lptstr, $size);
     my Str $out = $b.decode('utf16').split("\0")[0].chomp;
     LocalFree(nativecast(Pointer[void], $lptstr));
-    SetLastError($error);
+    RestoreLastError($error);
     $out;
   }
 }
