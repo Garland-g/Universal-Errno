@@ -1,6 +1,6 @@
 
 die "Not on Windows" unless $*DISTRO.is-win();
-
+use Universal::errno::Constants;
 use NativeCall;
 
 enum FORMAT_MESSAGE (
@@ -68,6 +68,7 @@ my class errno {
   }
 
   method Numeric(--> Int:D) { self!index }
+  method symbol(--> Errno:D) { Errno(self.Numeric) }
 }
 
 module Universal::errno::Windows {

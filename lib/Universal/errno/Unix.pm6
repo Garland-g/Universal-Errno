@@ -1,6 +1,6 @@
 use v6.c;
 
-use Constants::Errno;
+use Universal::errno::Constants;
 
 use NativeCall;
 
@@ -28,7 +28,7 @@ my class errno {
     }
     method Str(--> Str:D)  {
       my $index = self!index;
-      my $current_errno = E($index);
+      my $current_errno = Errno($index);
       my $locale = newlocale(0, "C", 0);
       die "While handling error of type {$current_errno}, another error occurred:\n {self.symbol}" unless $locale ~~ locale_t;
       my Str $error = "" ~ strerror_l($index, $locale);
@@ -44,7 +44,7 @@ my class errno {
         }
     }
     method Numeric(--> Int:D) { self!index }
-    method symbol(--> E:D) { E(self.Numeric) }
+    method symbol(--> Errno:D) { Errno(self.Numeric) }
 }
 
 module Universal::errno::Unix:ver<0.0.2>:auth<cpan:ELIZABETH> {
@@ -63,7 +63,7 @@ module Universal::errno::Unix:ver<0.0.2>:auth<cpan:ELIZABETH> {
     # sub strerror added by Travis Gibson
     my sub strerror(Int() $value --> Str) is export {
       my $locale = newlocale(0, "C", 0);
-      die "While handling error of type {E($value)}, another error occurred:\n {errno().symbol}" unless $locale ~~ locale_t;
+      die "While handling error of type {Errno($value)}, another error occurred:\n {errno().symbol}" unless $locale ~~ locale_t;
       my Str $error = "" ~ strerror_l($value, $locale);
       freelocale($locale);
       $error
