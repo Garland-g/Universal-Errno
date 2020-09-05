@@ -12,8 +12,8 @@ Universal::errno::Constants - Errno codes
 
 use Universal::errno::Constants;
 
-say E::AGAIN.Int;
-say E::E2BIG.Int;
+say EAGAIN.Int;
+say E2BIG.Int;
 
 =end code
 
