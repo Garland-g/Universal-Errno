@@ -40,7 +40,7 @@ lizmat's `Unix::errno` can be found at [https://github.com/lizmat/Unix-errno](ht
 COPYRIGHT AND LICENSE
 =====================
 
-Copyright 2019 Travis Gibson
+Copyright 2020 Travis Gibson
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 

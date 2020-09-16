@@ -68,7 +68,7 @@ lizmat's C<Unix::errno> can be found at L<https://github.com/lizmat/Unix-errno>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2019 Travis Gibson
+Copyright 2020 Travis Gibson
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 
