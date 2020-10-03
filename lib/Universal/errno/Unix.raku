@@ -14,7 +14,17 @@ my sub strerror_l(int32 $errno, locale_t $locale) returns Str is native { ... }
 
 my constant CLIB = $*KERNEL.name eq 'darwin'
   ?? 'libSystem.B.dylib'
-  !! 'libc.so.6';   # other variations may need to be added later
+  !! $*KERNEL.name eq 'linux'
+  ?? 'libc.so.6'
+  !! $*KERNEL.name eq 'dragonflybsd'
+  ?? 'libc.so.8'
+  !! $*KERNEL.name eq 'freebsd'
+  ?? 'libc.so.7'
+  !! $*KERNEL.name eq 'netbsd'
+  ?? 'libc.so.12'
+  !! die "unknown";
+  # other variations may need to be added later
+
 my int $last_set = 0;
 my int $last_seen_native
   = my $ERRNO := cglobal(CLIB, "errno", int32);

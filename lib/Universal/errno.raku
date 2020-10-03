@@ -42,7 +42,7 @@ use Universal::errno;
 
 Universal::errno is an extension of and wrapper around lizmat's C<Unix::errno>,
 and exports the same C<errno> and C<set_errno> interface. It works on Linux,
-Windows, Freebsd, Openbsd, Netbsd, Dragonflybsd, and Macos.
+Windows, Freebsd, Netbsd, Dragonflybsd, and Macos.
 
 One added feature is the C<strerror> method, which gets the string for the
 error in a thread-safe way using POSIX C<strerror_l>. This allows getting the
