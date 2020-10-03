@@ -10,10 +10,10 @@
   "name" : "Universal::errno",
   "perl" : "6.c",
   "provides" : {
-    "Universal::errno" : "lib/Universal/errno.raku",
-    "Universal::errno::Constants" : "lib/Universal/errno/Constants.raku",
-    "Universal::errno::Unix" : "lib/Universal/errno/Unix.raku",
-    "Universal::errno::Windows" : "lib/Universal/errno/Windows.raku"
+    "Universal::errno" : "lib/Universal/errno.rakumod",
+    "Universal::errno::Constants" : "lib/Universal/errno/Constants.rakumod",
+    "Universal::errno::Unix" : "lib/Universal/errno/Unix.rakumod",
+    "Universal::errno::Windows" : "lib/Universal/errno/Windows.rakumod"
   },
   "resources" : [ ],
   "source-url" : "",
