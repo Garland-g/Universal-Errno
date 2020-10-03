@@ -2,7 +2,7 @@ use v6.c;
 use Test;
 use Universal::errno;
 
-plan 7;
+plan 8;
 
 my Int $err = 2;
 
@@ -12,5 +12,7 @@ is errno.^name, 'errno', <errno is still the correct class>;
 
 is +errno, $err, <Got the Int>;
 isa-ok errno.Str, Str, <Got the Str>;
-is errno.gist, "{errno.Str} (errno = 2)", <Got the gist>;
+is errno.gist, "{errno.Str} (errno = {$err})", <Got the gist>;
 is strerror($err), errno.Str, <Created the Str>;
+
+is strerror(-1) , "Unknown error -1", <Unknown errno number>;

@@ -12,6 +12,9 @@ my sub newlocale(int32 $mask, Str $locale, int32 $base) returns locale_t is nati
 
 my sub strerror_l(int32 $errno, locale_t $locale) returns Str is native { ... }
 
+# POSIX version
+my sub strerror_r(int32 $errno, Pointer $buf, size_t $len) returns int32 is native { ... }
+
 my constant CLIB = $*KERNEL.name eq 'darwin'
   ?? 'libSystem.B.dylib'
   !! $*KERNEL.name eq 'linux'
@@ -37,13 +40,7 @@ my class errno {
         $last_set
     }
     method Str(--> Str:D)  {
-      my $index = self!index;
-      my $current_errno = Errno($index);
-      my $locale = newlocale(0, "C", 0);
-      die "While handling error of type {$current_errno}, another error occurred:\n {self.symbol}" unless $locale ~~ locale_t;
-      my Str $error = "" ~ strerror_l($index, $locale);
-      freelocale($locale);
-      return $error;
+      return strerror_compat(self!index);
     }
     method gist(--> Str:D) {
         if self!index -> $index {
@@ -56,6 +53,49 @@ my class errno {
     method Numeric(--> Int:D) { self!index }
     method symbol(--> Errno:D) { Errno(self.Numeric) }
 }
+
+# strerror is not threadsafe, so it is not usable in Raku.
+# strerror_r has two different versions, one POSIX, and one GNU.
+# strerror_l is a POSIX standard, but macos and dragonflybsd do not implement it. GNU and musl do.
+# To implement this properly, attempt to call strerror_l. If that fails, use strerror_r.
+# GNU-specific strerror_r will never be called, so this is fully portable.
+
+# Ugly compat function
+sub strerror_compat(int32 $errno) returns Str:D {
+  my $current_errno = Errno($errno);
+  my $locale = newlocale(0, "C", 0);
+  die "While handling error of type {$current_errno}, another error occurred:\n {errno.symbol}" unless $locale ~~ locale_t;
+  my Str:D $error = "";
+  {
+    $error = "" ~ strerror_l($errno, $locale);
+    CATCH {
+      freelocale($locale);
+      $error = "" ~ strerror_ugly($errno);
+      return $error;
+    }
+  }
+  freelocale($locale);
+  $error;
+}
+
+sub strerror_ugly(int32 $errno) returns Str {
+  my buf8 $buf .= allocate(1024, 0);
+  my $res;
+  while ( $res = strerror_r($errno, nativecast(Pointer, $buf), $buf.elems) ) != 0 {
+    if $res < 0 {
+      if errno.symbol ~~ EINVAL {
+        return "Unknown error {$errno}";
+      }
+    }
+    elsif Errno($res) ~~ EINVAL {
+      return "Unknown error {$errno}";
+    }
+    # Handle ERANGE error
+    $buf.reallocate($buf.elems * 2, 0);
+  }
+  return $buf.decode;
+}
+
 
 module Universal::errno::Unix:ver<0.0.2>:auth<cpan:ELIZABETH> {
     my $proxy := Proxy.new(
@@ -72,11 +112,7 @@ module Universal::errno::Unix:ver<0.0.2>:auth<cpan:ELIZABETH> {
 
     # sub strerror added by Travis Gibson
     my sub strerror(Int() $value --> Str) is export {
-      my $locale = newlocale(0, "C", 0);
-      die "While handling error of type {Errno($value)}, another error occurred:\n {errno().symbol}" unless $locale ~~ locale_t;
-      my Str $error = "" ~ strerror_l($value, $locale);
-      freelocale($locale);
-      $error
+      strerror_compat($value);
     }
 }
 
