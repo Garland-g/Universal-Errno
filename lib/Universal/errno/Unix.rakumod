@@ -2,6 +2,7 @@ use v6.c;
 
 use Universal::errno::Constants;
 
+use NativeLibs:ver<0.0.5+>;
 use NativeCall;
 
 class locale_t is repr('CPointer') {}
@@ -17,16 +18,11 @@ my sub strerror_r(int32 $errno, Pointer $buf, size_t $len) returns int32 is nati
 
 my constant CLIB = $*KERNEL.name eq 'darwin'
   ?? 'libSystem.B.dylib'
-  !! $*KERNEL.name eq 'linux'
-  ?? 'libc.so.6'
-  !! $*KERNEL.name eq 'dragonflybsd'
-  ?? 'libc.so.8'
-  !! $*KERNEL.name eq 'freebsd'
-  ?? 'libc.so.7'
-  !! $*KERNEL.name eq 'netbsd'
-  ?? 'libc.so.12'
-  !! die "unknown";
-  # other variations may need to be added later
+  !! NativeLibs::Searcher.at-runtime(
+    'c',
+    'errno',
+    0..100 # This range should cover all BSDs and Linux for a long time.
+  );
 
 my int $last_set = 0;
 my int $last_seen_native

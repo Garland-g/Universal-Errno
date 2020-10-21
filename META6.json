@@ -4,7 +4,9 @@
     "Travis Gibson"
   ],
   "build-depends" : [ ],
-  "depends" : [ ],
+  "depends" : [
+    "NativeLibs:ver<0.0.5+>"
+  ],
   "description" : "Wrapper for errno modules for Unix and Windows",
   "license" : "Artistic-2.0",
   "name" : "Universal::errno",
