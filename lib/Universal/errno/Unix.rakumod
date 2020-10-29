@@ -21,7 +21,7 @@ my constant CLIB = $*KERNEL.name eq 'darwin'
   !! NativeLibs::Searcher.at-runtime(
     'c',
     'errno',
-    0..100 # This range should cover all BSDs and Linux for a long time.
+    1..100 # This range should cover all BSDs and Linux for a long time.
   );
 
 my int $last_set = 0;
