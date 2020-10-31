@@ -12,7 +12,7 @@ my &real-set_errno := ::("{$lib}::EXPORT::DEFAULT::{'&set_errno'}");
 #This uses a thread-safe strerror under the hood
 my &real-strerror := ::("{$lib}::EXPORT::DEFAULT::{'&strerror'}");
 
-module Universal::errno:ver<0.0.2>:auth<cpan:GARLANDG> {
+module Universal::errno:ver<0.0.3>:auth<cpan:GARLANDG> {
   my sub errno() is export is raw { real-errno() }
   my sub set_errno(Int() $value) is export is raw { real-set_errno($value) }
   my sub strerror(Int() $value --> Str) is export is raw { real-strerror($value) }

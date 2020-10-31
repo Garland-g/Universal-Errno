@@ -6,7 +6,7 @@ Universal::errno - Wrapper for errno modules for Unix and Windows
 SYNOPSIS
 ========
 
-```raku
+```perl6
 use Universal::errno;
 
   set_errno(2);

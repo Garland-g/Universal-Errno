@@ -2,5 +2,8 @@ Revision history for Universal::errno
 
 {{$NEXT}}
 
+0.0.3  2020-10-31T13:01:24-07:00
+    - Fix exporting strerror
+
 0.0.2  2020-10-30T17:14:20-07:00
     - Initial version

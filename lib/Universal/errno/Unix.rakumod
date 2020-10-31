@@ -93,7 +93,7 @@ sub strerror_ugly(int32 $errno) returns Str {
 }
 
 
-module Universal::errno::Unix:ver<0.0.2>:auth<cpan:ELIZABETH> {
+module Universal::errno::Unix:ver<0.0.3>:auth<cpan:ELIZABETH> {
     my $proxy := Proxy.new(
       FETCH => -> $ { UNIT::errno },
       STORE => -> $, $value { set_errno($value) }
