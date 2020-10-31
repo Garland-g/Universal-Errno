@@ -23,7 +23,7 @@ sub EXPORT() {
   );
 }
 
-module Universal::errno:ver<0.0.3>:auth<cpan:GARLANDG> {}
+module Universal::errno:ver<0.0.4>:auth<cpan:GARLANDG> {}
 
 =begin pod
 
