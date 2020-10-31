@@ -1,4 +1,6 @@
 Revision history for Universal::errno
 
 {{$NEXT}}
+
+0.0.2  2020-10-30T17:14:20-07:00
     - Initial version

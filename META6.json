@@ -1,25 +1,29 @@
 {
-  "auth" : "cpan:GARLANDG",
-  "authors" : [
+  "auth": "cpan:GARLANDG",
+  "authors": [
     "Travis Gibson"
   ],
-  "build-depends" : [ ],
-  "depends" : [
+  "build-depends": [
+  ],
+  "depends": [
     "NativeLibs:ver<0.0.5+>"
   ],
-  "description" : "Wrapper for errno modules for Unix and Windows",
-  "license" : "Artistic-2.0",
-  "name" : "Universal::errno",
-  "perl" : "6.c",
-  "provides" : {
-    "Universal::errno" : "lib/Universal/errno.rakumod",
-    "Universal::errno::Constants" : "lib/Universal/errno/Constants.rakumod",
-    "Universal::errno::Unix" : "lib/Universal/errno/Unix.rakumod",
-    "Universal::errno::Windows" : "lib/Universal/errno/Windows.rakumod"
+  "description": "Wrapper for errno modules for Unix and Windows",
+  "license": "Artistic-2.0",
+  "name": "Universal::errno",
+  "perl": "6.c",
+  "provides": {
+    "Universal::errno": "lib/Universal/errno.rakumod",
+    "Universal::errno::Constants": "lib/Universal/errno/Constants.rakumod",
+    "Universal::errno::Unix": "lib/Universal/errno/Unix.rakumod",
+    "Universal::errno::Windows": "lib/Universal/errno/Windows.rakumod"
   },
-  "resources" : [ ],
-  "source-url" : "",
-  "tags" : [ ],
-  "test-depends" : [ ],
-  "version" : "0.0.1"
+  "resources": [
+  ],
+  "source-url": "https://github.com/Garland-g/Universal-errno",
+  "tags": [
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.2"
 }
