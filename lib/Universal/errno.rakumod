@@ -1,22 +1,29 @@
 use Universal::errno::Constants;
 
-my Str $lib = $*DISTRO.is-win()
-  ?? "Universal::errno::Windows"
-  !! "Universal::errno::Unix";
-
-require ::($lib);
-
-my &real-errno := ::("{$lib}::EXPORT::DEFAULT::{'&errno'}");
-my &real-set_errno := ::("{$lib}::EXPORT::DEFAULT::{'&set_errno'}");
-
-#This uses a thread-safe strerror under the hood
-my &real-strerror := ::("{$lib}::EXPORT::DEFAULT::{'&strerror'}");
-
-module Universal::errno:ver<0.0.3>:auth<cpan:GARLANDG> {
-  my sub errno() is export is raw { real-errno() }
-  my sub set_errno(Int() $value) is export is raw { real-set_errno($value) }
-  my sub strerror(Int() $value --> Str) is export is raw { real-strerror($value) }
+sub EXPORT() {
+  my &real-errno;
+  my &real-set_errno;
+  my &real-strerror;
+  if $*DISTRO.is-win() {
+    require Universal::errno::Windows;
+    &real-errno = ::("Universal::errno::Windows::EXPORT::DEFAULT::{'&errno'}");
+    &real-set_errno = ::("Universal::errno::Windows::EXPORT::DEFAULT::{'&set_errno'}");
+    &real-strerror = ::("Universal::errno::Windows::EXPORT::DEFAULT::{'&strerror'}");
+  }
+  else {
+    require Universal::errno::Unix;
+    &real-errno = ::("Universal::errno::Unix::EXPORT::DEFAULT::{'&errno'}");
+    &real-set_errno = ::("Universal::errno::Unix::EXPORT::DEFAULT::{'&set_errno'}");
+    &real-strerror = ::("Universal::errno::Unix::EXPORT::DEFAULT::{'&strerror'}");
+  }
+  %(
+    '&errno' => &real-errno,
+    '&set_errno' => &real-set_errno,
+    '&strerror' => &real-strerror,
+  );
 }
+
+module Universal::errno:ver<0.0.3>:auth<cpan:GARLANDG> {}
 
 =begin pod
 
