@@ -107,7 +107,7 @@ module Universal::errno::Unix:ver<0.0.2>:auth<cpan:ELIZABETH> {
     }
 
     # sub strerror added by Travis Gibson
-    my sub strerror(Int() $value --> Str) is export {
+    my sub strerror(Int() $value --> Str) is export is raw {
       strerror_compat($value);
     }
 }

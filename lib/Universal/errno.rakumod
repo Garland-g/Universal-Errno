@@ -15,7 +15,7 @@ my &real-strerror := ::("{$lib}::EXPORT::DEFAULT::{'&strerror'}");
 module Universal::errno:ver<0.0.2>:auth<cpan:GARLANDG> {
   my sub errno() is export is raw { real-errno() }
   my sub set_errno(Int() $value) is export is raw { real-set_errno($value) }
-  my sub strerror(Int() $value --> Str) is export { real-strerror($value) }
+  my sub strerror(Int() $value --> Str) is export is raw { real-strerror($value) }
 }
 
 =begin pod
