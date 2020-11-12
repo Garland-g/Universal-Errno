@@ -6,6 +6,7 @@
   "build-depends": [
   ],
   "depends": [
+    "if",
     "NativeLibs:ver<0.0.5+>"
   ],
   "description": "Wrapper for errno modules for Unix and Windows",

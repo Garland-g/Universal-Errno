@@ -1,29 +1,20 @@
+use if;
+
 use Universal::errno::Constants;
 
-sub EXPORT() {
-  my &real-errno;
-  my &real-set_errno;
-  my &real-strerror;
-  if $*DISTRO.is-win() {
-    require Universal::errno::Windows;
-    &real-errno = ::("Universal::errno::Windows::EXPORT::DEFAULT::{'&errno'}");
-    &real-set_errno = ::("Universal::errno::Windows::EXPORT::DEFAULT::{'&set_errno'}");
-    &real-strerror = ::("Universal::errno::Windows::EXPORT::DEFAULT::{'&strerror'}");
-  }
-  else {
-    require Universal::errno::Unix;
-    &real-errno = ::("Universal::errno::Unix::EXPORT::DEFAULT::{'&errno'}");
-    &real-set_errno = ::("Universal::errno::Unix::EXPORT::DEFAULT::{'&set_errno'}");
-    &real-strerror = ::("Universal::errno::Unix::EXPORT::DEFAULT::{'&strerror'}");
-  }
-  %(
-    '&errno' => &real-errno,
-    '&set_errno' => &real-set_errno,
-    '&strerror' => &real-strerror,
-  );
+use Universal::errno::Windows:if($*DISTRO.is-win());
+use Universal::errno::Unix:if(not $*DISTRO.is-win());
+
+module Universal::errno:ver<0.0.4>:auth<cpan:GARLANDG> {
 }
 
-module Universal::errno:ver<0.0.4>:auth<cpan:GARLANDG> {}
+sub EXPORT() {
+  %(
+    '&errno' => &errno,
+    '&set_errno' => &set_errno,
+    '&strerror' => &strerror,
+  );
+}
 
 =begin pod
 
