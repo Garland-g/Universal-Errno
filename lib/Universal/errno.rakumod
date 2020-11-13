@@ -13,6 +13,7 @@ sub EXPORT() {
     '&errno' => &errno,
     '&set_errno' => &set_errno,
     '&strerror' => &strerror,
+    'Errno' => Errno,
   );
 }
 
