@@ -37,7 +37,7 @@ class X::errno is Exception {
   }
 }
 
-module Universal::errno:ver<0.0.4>:auth<cpan:GARLANDG> {
+module Universal::errno:ver<0.1.0>:auth<cpan:GARLANDG> {
   multi sub trait_mod:<is>(Routine $s, :$error-model where * ~~ "errno") is export {
     $s.wrap({
       my $result := callsame;

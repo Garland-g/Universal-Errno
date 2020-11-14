@@ -2,6 +2,12 @@ Revision history for Universal::errno
 
 {{$NEXT}}
 
+0.1.0  2020-11-13T21:50:00-08:00
+    - Add Errno enum to standard exports
+    - Add X::errno class
+    - Add trait_mod:<is> error-model<errno>
+    - Add trait_mod:<is> error-model<neg-errno>
+
 0.0.4  2020-10-31T14:54:16-07:00
     - Fix precompilation issue
 
