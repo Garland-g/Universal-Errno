@@ -118,6 +118,8 @@ socket(2) and handles the errors with a CATCH block.
 =begin code :lang<raku>
 
 use NativeCall;
+use Constants::Sys::Socket;
+
 sub socket(int32, int32, int32) returns int32 is native is error-model<errno> { ... }
 my int32 $socket;
 
