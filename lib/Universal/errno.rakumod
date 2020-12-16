@@ -39,8 +39,8 @@ class X::errno is Exception {
 
 module Universal::errno:ver<0.1.0>:auth<cpan:GARLANDG> {
   multi sub trait_mod:<is>(Routine $s, :$error-model where * ~~ "errno") is export {
-    $s.wrap({
-      my $result := callsame;
+    $s.wrap(-> |c {
+      my $result := callwith(|c);
       $result < 0
       ?? do {
         my $error := X::errno.new(:errno(errno.symbol));
@@ -52,8 +52,8 @@ module Universal::errno:ver<0.1.0>:auth<cpan:GARLANDG> {
   }
 
   multi sub trait_mod:<is>(Routine $s, :$error-model where * ~~ "neg-errno") is export {
-    $s.wrap({
-      my $result := callsame;
+    $s.wrap(-> |c {
+      my $result := callwith(|c);
       $result < 0
         ?? Failure.new(X::errno.new(:errno(Errno(-$result))))
         !! $result;
