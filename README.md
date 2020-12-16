@@ -25,9 +25,9 @@ One added feature is the `strerror` method, which gets the string for the error 
 
 This module provides an Exception class, X::errno. To check the type of error in a portable way, use the `symbol` method and smartmatch against an entry in the Errno enum.
 
-It also provides a trait: error-model. Mark a sub or method with is error-model<errno> and the trait will automatically box the errno for you and reset errno to 0.
+It also provides a trait: error-model. Mark a sub or method with `is error-model<errno>` and the trait will automatically box the errno for you and reset errno to 0.
 
-For calls that return `-errno`, there is also a trait error-model<neg-errno>.
+For calls that return `-errno`, there is also the trait `is error-model<neg-errno>`.
 
 As an example of a real-world scenario, this code sets up a socket using socket(2) and handles the errors with a CATCH block.
 
