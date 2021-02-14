@@ -110,6 +110,8 @@ the Errno enum.
 It also provides a trait: error-model. Mark a sub or method with C<is error-model<errno>>
 and the trait will automatically box the errno for you and reset errno to 0.
 
+Important note: With a native sub, the C<is native> trait must come before C<is error-model>.
+
 For calls that return C<-errno>, there is also the trait C<is error-model<neg-errno>>.
 
 As an example of a real-world scenario, this code sets up a socket using

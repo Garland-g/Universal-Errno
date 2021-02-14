@@ -27,6 +27,8 @@ This module provides an Exception class, X::errno. To check the type of error in
 
 It also provides a trait: error-model. Mark a sub or method with `is error-model<errno>` and the trait will automatically box the errno for you and reset errno to 0.
 
+Important note: With a native sub, the `is native` trait must come before `is error-model`.
+
 For calls that return `-errno`, there is also the trait `is error-model<neg-errno>`.
 
 As an example of a real-world scenario, this code sets up a socket using socket(2) and handles the errors with a CATCH block.
