@@ -2,6 +2,10 @@ Revision history for Universal::errno
 
 {{$NEXT}}
 
+0.2.0  2021-04-03T12:05:27-07:00
+    - Add check-errno and check-neg-errno subs
+    - Improve documentation
+
 0.1.1  2020-12-16T11:29:08-08:00
     - Fix trait_mod:<is> error-model for subs with multiple arguments
 

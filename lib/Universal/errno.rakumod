@@ -136,7 +136,7 @@ class X::errno is Exception {
 
 =end pod
 
-module Universal::errno:ver<0.1.1>:auth<cpan:GARLANDG> {
+module Universal::errno:ver<0.2.0>:auth<cpan:GARLANDG> {
   multi sub trait_mod:<is>(Routine $s, :$error-model where * ~~ "errno") is export {
     $s.wrap(-> |c {
       my $result := callwith(|c);
