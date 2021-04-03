@@ -127,6 +127,9 @@ my int32 $socket;
 
 try {
   $socket = socket(AF::INET, SOCK_DGRAM, 0);
+
+  # Do something with $socket
+
   CATCH {
     when X::errno {
       given .symbol {
