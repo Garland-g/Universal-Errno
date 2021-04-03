@@ -74,4 +74,36 @@ use Test;
   is ~$error, strerror(2), <Error string is correct>;
 }
 
+# Inline sub versions of traits
+
+{
+  my sub error-code-with-second-arg(Int $error, Str $test) { -$error }
+
+  my $error = check-neg-errno error-code-with-second-arg(3, "test");
+  $error.so;
+  $error .= exception;
+
+  isa-ok $error, X::errno, <Correct class from neg-errno trait>;
+  is $error.symbol, Errno(3), <Error has correct symbol>;
+  is +$error, 3, <Error value is correct>;
+  is ~$error, strerror(3), <Error string is correct>;
+
+}
+
+{
+  my sub error-code-with-second-arg(Int $error, Str $test) {
+    set_errno($error);
+    -1;
+  }
+
+  my $error = check-errno error-code-with-second-arg(2, "test");
+  $error.so;
+  $error.= exception;
+
+  isa-ok $error, X::errno, <Correct class from the errno trait>;
+  is $error.symbol, Errno(2), <Error has correct symbol>;
+  is +$error, 2, <Error value is correct>;
+  is ~$error, strerror(2), <Error string is correct>;
+}
+
 done-testing;

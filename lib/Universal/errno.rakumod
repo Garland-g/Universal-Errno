@@ -59,6 +59,22 @@ module Universal::errno:ver<0.1.1>:auth<cpan:GARLANDG> {
         !! $result;
     });
   }
+
+  sub check-neg-errno(Int $result) is inlinable is export {
+    $result < 0
+      ?? Failure.new(X::errno.new(:errno(Errno(-$result))))
+      !! $result;
+  }
+
+  sub check-errno(Int $result) is inlinable is export {
+    $result < 0
+      ?? do {
+        my $error := X::errno.new(:errno(errno.symbol));
+        set_errno(0);
+        Failure.new($error)
+      }
+      !! $result;
+  }
 }
 
 sub EXPORT() {
@@ -113,6 +129,10 @@ and the trait will automatically box the errno for you and reset errno to 0.
 Important note: With a native sub, the C<is native> trait must come before C<is error-model>.
 
 For calls that return C<-errno>, there is also the trait C<is error-model<neg-errno>>.
+
+If high-performance is needed for a native sub that can return errno, use the
+C<check-errno> and/or C<check-neg-errno> subs. These subs are interchangeable
+with the traits, but cannot be directly applied to a nativecall subroutine.
 
 As an example of a real-world scenario, this code sets up a socket using
 socket(2) and handles the errors with a CATCH block.
