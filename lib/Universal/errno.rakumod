@@ -88,14 +88,24 @@ use Universal::errno::Constants;
 use Universal::errno::Windows:if($*DISTRO.is-win());
 use Universal::errno::Unix:if(not $*DISTRO.is-win());
 
+#| Exception class for errno
 class X::errno is Exception {
   has Errno:D $.errno is required;
+  #| Get the Str message for this errno value.
   method message() { strerror(+$!errno) }
+  #|
   method Str() { strerror(+$!errno) }
+
+  #| Get the symbol of this errno value.
   method symbol() { $!errno }
+
+  #| Get the integer that corresponds to this errno value.
   method Int() { +$!errno }
+  #|
   method Numeric() { +$!errno }
+
   method gist() { "{self.Str} (errno = +$!errno)" }
+
   multi method new() {
     my $errno = Errno(+errno);
     set_errno(0);
@@ -120,6 +130,12 @@ class X::errno is Exception {
   }
 }
 
+=begin pod
+
+=head1 Subs
+
+=end pod
+
 module Universal::errno:ver<0.1.1>:auth<cpan:GARLANDG> {
   multi sub trait_mod:<is>(Routine $s, :$error-model where * ~~ "errno") is export {
     $s.wrap(-> |c {
@@ -143,12 +159,14 @@ module Universal::errno:ver<0.1.1>:auth<cpan:GARLANDG> {
     });
   }
 
+  #| Check the result against the negative errno form.
   sub check-neg-errno(Int $result) is inlinable is export {
     $result < 0
       ?? Failure.new(X::errno.new(:errno(Errno(-$result))))
       !! $result;
   }
 
+  #| Check the result against the errno() form.
   sub check-errno(Int $result) is inlinable is export {
     $result < 0
       ?? do {

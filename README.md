@@ -31,6 +31,8 @@ Important note: With a native sub, the `is native` trait must come before `is er
 
 For calls that return `-errno`, there is also the trait `is error-model<neg-errno>`.
 
+If high-performance is needed for a native sub that can return errno, use the `check-errno` and/or `check-neg-errno` subs. These subs are interchangeable with the traits, but cannot be directly applied to a nativecall subroutine.
+
 As an example of a real-world scenario, this code sets up a socket using socket(2) and handles the errors with a CATCH block.
 
 ```raku
@@ -42,6 +44,9 @@ my int32 $socket;
 
 try {
   $socket = socket(AF::INET, SOCK_DGRAM, 0);
+
+  # Do something with $socket
+
   CATCH {
     when X::errno {
       given .symbol {
@@ -57,6 +62,58 @@ try {
   }
 }
 ```
+
+class X::errno
+--------------
+
+Exception class for errno
+
+### method message
+
+```perl6
+method message() returns Mu
+```
+
+Get the Str message for this errno value.
+
+### method symbol
+
+```perl6
+method symbol() returns Mu
+```
+
+Get the symbol of this errno value.
+
+### method Int
+
+```perl6
+method Int() returns Mu
+```
+
+Get the integer that corresponds to this errno value.
+
+Subs
+====
+
+### sub check-neg-errno
+
+```perl6
+sub check-neg-errno(
+    Int $result
+) returns Mu
+```
+
+Check the result against the negative errno form.
+
+### sub check-errno
+
+```perl6
+sub check-errno(
+    Int $result
+) returns Mu
+```
+
+Check the result against the errno() form.
 
 AUTHOR
 ======
