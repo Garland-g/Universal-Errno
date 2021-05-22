@@ -57,7 +57,7 @@ my class errno {
 # GNU-specific strerror_r will never be called, so this is fully portable.
 
 # Ugly compat function
-sub strerror_compat(int32 $errno) returns Str:D {
+sub strerror_compat(int32 $errno) returns Str:D is inlinable {
   my $current_errno = Errno($errno);
   my $locale = newlocale(0, "C", 0);
   die "While handling error of type {$current_errno}, another error occurred:\n {errno.symbol}" unless $locale ~~ locale_t;
