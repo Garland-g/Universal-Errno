@@ -1,6 +1,6 @@
 use v6.c;
 
-use Universal::errno::Constants;
+use Universal::Errno::Constants;
 
 use NativeLibs:ver<0.0.5+>;
 use NativeCall;
@@ -93,7 +93,7 @@ sub strerror_ugly(int32 $errno) returns Str {
 }
 
 
-module Universal::errno::Unix:ver<0.2.0>:auth<cpan:ELIZABETH> {
+module Universal::Errno::Unix {
     my $proxy := Proxy.new(
       FETCH => -> $ { UNIT::errno },
       STORE => -> $, $value { set_errno($value) }

@@ -1,6 +1,6 @@
 use v6.c;
 use Test;
-use Universal::errno;
+use Universal::Errno;
 
 plan 8;
 

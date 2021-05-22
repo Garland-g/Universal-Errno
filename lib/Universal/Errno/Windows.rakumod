@@ -1,6 +1,6 @@
 
 die "Not on Windows" unless $*DISTRO.is-win();
-use Universal::errno::Constants;
+use Universal::Errno::Constants;
 use NativeCall;
 
 enum FORMAT_MESSAGE (
@@ -71,7 +71,7 @@ my class errno {
   method symbol(--> Errno:D) { Errno(self.Numeric) }
 }
 
-module Universal::errno::Windows {
+module Universal::Errno::Windows {
   my $proxy := Proxy.new(
     FETCH => -> $ { UNIT::errno },
     STORE => -> $, $value { set_errno($value) }
@@ -111,19 +111,18 @@ module Universal::errno::Windows {
 
 =head1 NAME
 
-Universal::errno::Windows - Provide transparent Windows access to errno
+Universal::Errno::Windows - Provide transparent Windows access to errno
 
 =head1 DESCRIPTION
 
-Universal::errno::Windows provides the same interface as C<Unix::errno> to
+Universal::Errno::Windows provides the same interface as C<Unix::errno> to
 Windows and its GetLastError and SetLastError functions. Unlike
 Windows, getting the error message will not reset the value of
 errno. That has to be done manually.
 
 Since this uses C<SetLastError>, the caveat about setting errno
-in C<Unix::errno> should not apply, as this is a function call,
-not setting an extern variable. This should not be relied upon
-unless Universal::errno::Windows is loaded directly.
+in C<Unix::errno> does not apply. This should not be relied upon
+unless Universal::Errno::Windows is loaded directly.
 
 =head1 AUTHOR
 
@@ -135,7 +134,7 @@ L<https://github.com/lizmat/Unix-errno>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2019 Travis Gibson
+Copyright 2021 Travis Gibson
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 

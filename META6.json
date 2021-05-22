@@ -9,15 +9,15 @@
     "if",
     "NativeLibs:ver<0.0.5+>"
   ],
-  "description": "Wrapper for errno modules for Unix and Windows",
+  "description": "Errno wrapper for Linux, Unix, and Windows",
   "license": "Artistic-2.0",
-  "name": "Universal::errno",
+  "name": "Universal::Errno",
   "perl": "6.c",
   "provides": {
-    "Universal::errno": "lib/Universal/errno.rakumod",
-    "Universal::errno::Constants": "lib/Universal/errno/Constants.rakumod",
-    "Universal::errno::Unix": "lib/Universal/errno/Unix.rakumod",
-    "Universal::errno::Windows": "lib/Universal/errno/Windows.rakumod"
+    "Universal::Errno": "lib/Universal/Errno.rakumod",
+    "Universal::Errno::Constants": "lib/Universal/Errno/Constants.rakumod",
+    "Universal::Errno::Unix": "lib/Universal/Errno/Unix.rakumod",
+    "Universal::Errno::Windows": "lib/Universal/Errno/Windows.rakumod"
   },
   "resources": [
   ],

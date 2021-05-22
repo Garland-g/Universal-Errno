@@ -1,17 +1,17 @@
-use Universal::errno;
-use Universal::errno::Constants;
+use Universal::Errno;
+use Universal::Errno::Constants;
 
 use Test;
 
 {
-  my $error = X::errno.new(:errno(Errno::EBADF));
+  my $error = X::Errno.new(:errno(Errno::EBADF));
 
-  isa-ok $error, X::errno, <Correct class>;
+  isa-ok $error, X::Errno, <Correct class>;
 
-  is $error.symbol, Errno::EBADF, <X::errno has correct symbol>;
-  is +$error, +Errno::EBADF, <X::errno containts correct integer value>;
-  is ~$error, strerror(Errno::EBADF), <X::errno stringifies correctly>;
-  is $error.message, strerror(Errno::EBADF), <X::errno message is stringifed errno>;
+  is $error.symbol, Errno::EBADF, <X::Errno has correct symbol>;
+  is +$error, +Errno::EBADF, <X::Errno containts correct integer value>;
+  is ~$error, strerror(Errno::EBADF), <X::Errno stringifies correctly>;
+  is $error.message, strerror(Errno::EBADF), <X::Errno message is stringifed errno>;
 }
 
 {
@@ -21,7 +21,7 @@ use Test;
   $error.so;
   $error .= exception;
 
-  isa-ok $error, X::errno, <Correct class from neg-errno trait>;
+  isa-ok $error, X::Errno, <Correct class from neg-errno trait>;
   is $error.symbol, Errno(3), <Error has correct symbol>;
   is +$error, 3, <Error value is correct>;
   is ~$error, strerror(3), <Error string is correct>;
@@ -38,7 +38,7 @@ use Test;
   $error.so;
   $error .= exception;
 
-  isa-ok $error, X::errno, <Correct class from errno trait>;
+  isa-ok $error, X::Errno, <Correct class from errno trait>;
   is $error.symbol, Errno(2), <Error has correct symbol>;
   is +$error, 2, <Error value is correct>;
   is ~$error, strerror(2), <Error string is correct>;
@@ -51,7 +51,7 @@ use Test;
   $error.so;
   $error .= exception;
 
-  isa-ok $error, X::errno, <Correct class from neg-errno trait>;
+  isa-ok $error, X::Errno, <Correct class from neg-errno trait>;
   is $error.symbol, Errno(3), <Error has correct symbol>;
   is +$error, 3, <Error value is correct>;
   is ~$error, strerror(3), <Error string is correct>;
@@ -68,7 +68,7 @@ use Test;
   $error.so;
   $error .= exception;
 
-  isa-ok $error, X::errno, <Correct class from errno trait>;
+  isa-ok $error, X::Errno, <Correct class from errno trait>;
   is $error.symbol, Errno(2), <Error has correct symbol>;
   is +$error, 2, <Error value is correct>;
   is ~$error, strerror(2), <Error string is correct>;
@@ -83,7 +83,7 @@ use Test;
   $error.so;
   $error .= exception;
 
-  isa-ok $error, X::errno, <Correct class from neg-errno trait>;
+  isa-ok $error, X::Errno, <Correct class from neg-errno trait>;
   is $error.symbol, Errno(3), <Error has correct symbol>;
   is +$error, 3, <Error value is correct>;
   is ~$error, strerror(3), <Error string is correct>;
@@ -100,7 +100,7 @@ use Test;
   $error.so;
   $error.= exception;
 
-  isa-ok $error, X::errno, <Correct class from the errno trait>;
+  isa-ok $error, X::Errno, <Correct class from the errno trait>;
   is $error.symbol, Errno(2), <Error has correct symbol>;
   is +$error, 2, <Error value is correct>;
   is ~$error, strerror(2), <Error string is correct>;

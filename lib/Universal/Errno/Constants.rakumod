@@ -4,13 +4,13 @@ use v6.c;
 
 =head1 NAME
 
-Universal::errno::Constants - Errno codes
+Universal::Errno::Constants - Errno codes
 
 =head1 SYNOPSIS
 
 =begin code :lang<perl6>
 
-use Universal::errno::Constants;
+use Universal::Errno::Constants;
 
 say EAGAIN.Int;
 say E2BIG.Int;
@@ -19,7 +19,7 @@ say E2BIG.Int;
 
 =head1 DESCRIPTION
 
-Universal::errno::Contants maps errno constants in C to the
+Universal::Errno::Contants maps errno constants in C to the
 appropriate number for your platform.
 
 This module should be compatible with windows, macos, linux, netbsd,
@@ -35,13 +35,13 @@ Travis Gibson <TGib.Travis@protonmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2019 Travis Gibson
+Copyright 2021 Travis Gibson
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 
 =end pod
 
-unit module Universal::errno::Contants:ver<0.2.0>:auth<cpan:GARLAND_G>;
+unit module Universal::Errno::Contants:ver<0.2.0>:auth<cpan:GARLAND_G>;
 
 enum Errno is export ($*KERNEL.name eq 'linux' ?? do {
     EPERM => 1,
