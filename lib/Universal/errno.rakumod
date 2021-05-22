@@ -101,16 +101,20 @@ class X::errno is Exception {
 
   #| Get the integer that corresponds to this errno value.
   method Int() { +$!errno }
-  #|
+
+  #| Get the numeric value of this errno value.
   method Numeric() { +$!errno }
 
   method gist() { "{self.Str} (errno = +$!errno)" }
 
+  #| Get a new Errno exception from errno.
+  #| This resets errno to 0.
   multi method new() {
     my $errno = Errno(+errno);
     set_errno(0);
     self.bless(:$errno);
   }
+
   multi method new(Int() $code) {
     my $errno = Errno($code);
     self.bless(:$errno);
@@ -137,6 +141,8 @@ class X::errno is Exception {
 =end pod
 
 module Universal::errno:ver<0.2.0>:auth<cpan:GARLANDG> {
+  #| Trait to check return value of subroutine and throw X::Errno if
+  #| return value is less than 1.
   multi sub trait_mod:<is>(Routine $s, :$error-model where * ~~ "errno") is export {
     $s.wrap(-> |c {
       my $result := callwith(|c);
@@ -150,6 +156,8 @@ module Universal::errno:ver<0.2.0>:auth<cpan:GARLANDG> {
     });
   }
 
+  #| Trait to check return value of subroutine and throw
+  #| abs(return value) as X::Errno if return value is less than 1.
   multi sub trait_mod:<is>(Routine $s, :$error-model where * ~~ "neg-errno") is export {
     $s.wrap(-> |c {
       my $result := callwith(|c);
