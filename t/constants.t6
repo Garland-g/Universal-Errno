@@ -1,0 +1,14 @@
+use v6.c;
+use Test;
+use Universal::Errno::Constants;
+use Universal::Errno;
+
+plan Errno.enums.elems;
+
+for Errno.kv -> $key, $value {
+    my $error = ::{"X::Errno::$key"};
+    subtest {
+        is $error.Int, $value;
+        is $error.WHICH, "X::Errno|{+$value}";
+    }, "X::Errno::$key";
+}

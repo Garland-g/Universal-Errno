@@ -202,12 +202,17 @@ module Universal::Errno:ver<0.2.0>:auth<cpan:GARLANDG> {
 }
 
 sub EXPORT() {
-  %(
+  my %exports = %(
     '&errno' => &errno,
     '&set_errno' => &set_errno,
     '&strerror' => &strerror,
     'Errno' => Errno,
   );
+
+  for Universal::Errno::Contants::Errno.kv -> $key, $value {
+      %exports{"X::Errno::$key"} = X::Errno.new($value)
+  }
+  return %exports;
 }
 
 =begin pod
