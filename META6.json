@@ -1,5 +1,5 @@
 {
-  "auth": "cpan:GARLANDG",
+  "auth": "zef:Garlandg",
   "authors": [
     "Travis Gibson"
   ],
@@ -26,5 +26,5 @@
   ],
   "test-depends": [
   ],
-  "version": "0.2.0"
+  "version": "1.0.0"
 }

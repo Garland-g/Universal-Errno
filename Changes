@@ -2,6 +2,12 @@ Revision history for Universal::Errno
 
 {{$NEXT}}
 
+1.0.0  2021-07-09T07:05:15-7:00
+    - Breaking: Rename to Universal::Errno e.g. use Universal::Errno
+    - Expand X::Errno type
+    - Export constant X::Errno classes under X::Errno::<errno>
+    - Implement value-style WHICH method for X::Errno classes
+
 0.2.0  2021-04-03T12:05:27-07:00
     - Add check-errno and check-neg-errno subs
     - Improve documentation

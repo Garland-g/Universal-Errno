@@ -155,7 +155,7 @@ class X::Errno is Exception {
 
 =end pod
 
-module Universal::Errno:ver<0.2.0>:auth<cpan:GARLANDG> {
+module Universal::Errno:ver<1.0.0>:auth<cpan:GARLANDG> {
   #| Trait to check return value of subroutine and throw X::Errno if
   #| return value is less than 1.
   multi sub trait_mod:<is>(Routine $s, :$error-model where * ~~ "errno") is export {

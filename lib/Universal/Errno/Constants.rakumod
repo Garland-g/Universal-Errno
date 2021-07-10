@@ -41,7 +41,7 @@ This library is free software; you can redistribute it and/or modify it under th
 
 =end pod
 
-unit module Universal::Errno::Contants:ver<0.2.0>:auth<cpan:GARLAND_G>;
+unit module Universal::Errno::Contants:ver<1.0.0>:auth<cpan:GARLAND_G>;
 
 enum Errno is export ($*KERNEL.name eq 'linux' ?? do {
     EPERM => 1,
